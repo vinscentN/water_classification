@@ -6,8 +6,8 @@ from xgboost import XGBClassifier
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.model_selection import train_test_split
+import pickle
 
 df = pd.read_csv('manicaland_dataset.csv')
 le = LabelEncoder()
@@ -26,10 +26,11 @@ data_new = df.drop("DATE OF LAST VISIT", axis=1)
 features = ['DISTRICT','WARD','VILLAGE','HH_SERVED','PUMP_TYPE','OUTLETS','SOAK_AWAY_PIT','VPM_VISITS/YEAR',
             'BH_COMMITTEE','SEASONALITY','AQUIFER_YIELD','TOTAL _DISSOLVED -SOLIDS','FUNCTIONAL_STATE']
 model_data = data_new[features]
-#
+
 y = model_data['FUNCTIONAL_STATE']
 X = model_data.copy()
 del X['FUNCTIONAL_STATE']
+
 Predictors = model_data.drop('FUNCTIONAL_STATE',axis=1).columns
 feature_name = list(X.columns)
 num_feats= 10
@@ -48,7 +49,7 @@ X=PredictorScalerFit.transform(X)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-from xgboost import XGBClassifier
+
 clf=XGBClassifier(max_depth=10, learning_rate=0.01, n_estimators=200, objective='binary:logistic', booster='gbtree', eval_metric='merror')
 
 XGB=clf.fit(X_train,y_train)
@@ -123,6 +124,5 @@ if st.sidebar.button("Predict"):
     functionality_state = [labels[prediction] for prediction in predictions]
     # Output the functionality state
     st.write(f"The water pump is {functionality_state}")
-
 
 
