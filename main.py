@@ -23,7 +23,7 @@ df = pd.read_csv('manicaland_dataset.csv')
 # Make predictions using the loaded model
 
 ##FRONTEND UI
-st.header("Water Source Point Functionality Prediction")
+st.header("Manicaland Province Water Source Points")
 
 
 
