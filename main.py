@@ -49,7 +49,7 @@ X=PredictorScalerFit.transform(X)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 from xgboost import XGBClassifier
-clf=XGBClassifier(max_depth=10, learning_rate=0.01, n_estimators=200, objective='binary:logistic', booster='gbtree')
+clf=XGBClassifier(max_depth=10, learning_rate=0.01, n_estimators=200, objective='binary:logistic', booster='gbtree', eval_metric='merror')
 
 XGB=clf.fit(X_train,y_train)
 
