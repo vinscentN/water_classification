@@ -23,7 +23,7 @@ df = pd.read_csv('manicaland_dataset.csv')
 # Make predictions using the loaded model
 
 ##FRONTEND UI
-st.header("Water Source Point Functionality Prediction App")
+st.header("Water Source Point Functionality Prediction")
 
 
 
@@ -32,7 +32,7 @@ st.header("Water Source Point Functionality Prediction App")
 st.title("Water Pump Prediction")
 image = Image.open('borehole.jpg')
 st.image(image, width=300)
-st.sidebar.title("Input Parameters")
+st.sidebar.title("Water Source Parameters")
 district = st.sidebar.selectbox("District", df["DISTRICT"].unique())
 ward = st.sidebar.selectbox("Ward", df["WARD"].unique())
 village = st.sidebar.selectbox("Village", df["VILLAGE"].unique())
@@ -47,7 +47,7 @@ aquifer_yield = st.sidebar.number_input("Aquifer Yield", min_value=0, value=100)
 total_dissolved_solids = st.sidebar.slider("Total Dissolved Solids", 0, 1000, 500)
 
 # Create a button to predict the water pump status
-if st.button("Predict"):
+if st.button("Click Here to Determine the status of the Water Source Point"):
     # Load the pickled model
     with open("model.pkl", "rb") as f:
         model = pickle.load(f)
