@@ -28,9 +28,10 @@ st.header("Water Source Point Functionality Prediction App")
 
 
 # Add an image to the top sidebar
-image = Image.open('borehole.jpg')
-st.sidebar.image(image, width=200)
+
 st.title("Water Pump Prediction")
+image = Image.open('borehole.jpg')
+st.image(image, width=300)
 st.sidebar.title("Input Parameters")
 district = st.sidebar.selectbox("District", df["DISTRICT"].unique())
 ward = st.sidebar.selectbox("Ward", df["WARD"].unique())
@@ -46,7 +47,7 @@ aquifer_yield = st.sidebar.number_input("Aquifer Yield", min_value=0, value=100)
 total_dissolved_solids = st.sidebar.slider("Total Dissolved Solids", 0, 1000, 500)
 
 # Create a button to predict the water pump status
-if st.sidebar.button("Predict"):
+if st.button("Predict"):
     # Load the pickled model
     with open("model.pkl", "rb") as f:
         model = pickle.load(f)
