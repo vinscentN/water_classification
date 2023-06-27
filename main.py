@@ -5,7 +5,7 @@ from sklearn.preprocessing import  LabelEncoder
 import xgboost as xgb
 import numpy as np
 st.header("Water Source Point Functionality Prediction App")
-df = pd.read_csv("https://raw.githubusercontent.com/vinscentN/water_classification/manicaland_dataset.csv")
+df = pd.read_csv("manicaland_dataset.csv")
 # load model
 best_xgboost_model = xgb.XGBRegressor()
 best_xgboost_model.load_model("best_model.json")
