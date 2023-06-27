@@ -1,14 +1,63 @@
 import streamlit as st
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import  LabelEncoder
-import xgboost as xgb
 import numpy as np
+from sklearn.preprocessing import LabelEncoder
+from xgboost import XGBClassifier
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import chi2
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.model_selection import train_test_split
+
+data = pd.read_csv('manicaland_dataset.csv')
+le = LabelEncoder()
+
+data['DISTRICT'] = le.fit_transform(data['DISTRICT'])
+data['VILLAGE'] = le.fit_transform(data['VILLAGE'].astype(str))
+data['FUNCTIONAL_STATE'] = le.fit_transform(data['FUNCTIONAL_STATE'].astype(str))
+data['SOAK_AWAY_PIT'] = le.fit_transform(data['SOAK_AWAY_PIT'].astype(str))
+data['PUMP_TYPE'] = le.fit_transform(data['PUMP_TYPE'].astype(str))
+data['PROTECTED'] = le.fit_transform(data['PROTECTED'].astype(str))
+data['BH_COMMITTEE'] = le.fit_transform(data['BH_COMMITTEE'].astype(str))
+data['SEASONALITY'] = le.fit_transform(data['SEASONALITY'].astype(str))
+data['PALATABILITY'] = le.fit_transform(data['PALATABILITY'].astype(str))
+
+data_new = data.drop("DATE OF LAST VISIT", axis=1)
+features = ['DISTRICT','WARD','VILLAGE','HH_SERVED','PUMP_TYPE','OUTLETS','SOAK_AWAY_PIT','VPM_VISITS/YEAR',
+            'BH_COMMITTEE','SEASONALITY','AQUIFER_YIELD','TOTAL _DISSOLVED -SOLIDS','FUNCTIONAL_STATE']
+model_data = data_new[features]
+
+y = model_data['FUNCTIONAL_STATE']
+X = model_data.copy()
+del X['FUNCTIONAL_STATE']
+Predictors = model_data.drop('FUNCTIONAL_STATE',axis=1).columns
+feature_name = list(X.columns)
+num_feats= 10
+
+
+X_norm = MinMaxScaler().fit_transform(X)
+chi_selector = SelectKBest(chi2, k=num_feats)
+chi_selector.fit(X_norm, y)
+chi_support = chi_selector.get_support()
+chi_feature = X.loc[:,chi_support].columns.tolist()
+
+PredictorScaler=MinMaxScaler()
+
+PredictorScalerFit=PredictorScaler.fit(X)
+
+X=PredictorScalerFit.transform(X)
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+from xgboost import XGBClassifier
+clf=XGBClassifier(max_depth=10, learning_rate=0.01, n_estimators=200, objective='binary:logistic', booster='gbtree')
+
+XGB=clf.fit(X_train,y_train)
+
+
+##FRONTEND UI
 st.header("Water Source Point Functionality Prediction App")
-df = pd.read_csv("manicaland_dataset.csv")
-# load model
-best_xgboost_model = xgb.XGBRegressor()
-best_xgboost_model.load_model("best_model.json")
 
 
 st.subheader("Please input or select relevant features about a Water Source Point!")
@@ -66,8 +115,8 @@ if st.sidebar.button("Predict"):
     input_data["seasonality"] = input_data["seasonality"].apply(lambda x: seasonality_map[x])
 
     # Make the prediction
-    predictions = best_xgboost_model.predict(input_data)[0]
 
+    predictions=XGB.predict(X_test)(input_data)[0]
     # Display the prediction
     st.write("### Prediction")
 
