@@ -12,7 +12,7 @@ import pickle
 
 # load model
 model = xgb.XGBRegressor()
-model.load_model("xgb_model.json")
+model.load_model("best_model.json")
 #Caching the model for faster loading
 
 df = pd.read_csv('manicaland_dataset.csv')
