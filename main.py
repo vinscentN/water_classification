@@ -31,7 +31,7 @@ st.header("Water Source Point Functionality Prediction")
 
 st.title("Water Pump Prediction")
 image = Image.open('borehole.jpg')
-st.image(image, width=300)
+st.image(image, width=450)
 st.sidebar.title("Water Source Parameters")
 district = st.sidebar.selectbox("District", df["DISTRICT"].unique())
 ward = st.sidebar.selectbox("Ward", df["WARD"].unique())
@@ -48,9 +48,6 @@ total_dissolved_solids = st.sidebar.slider("Total Dissolved Solids", 0, 1000, 50
 
 # Create a button to predict the water pump status
 if st.button("Click Here to Determine the status of the Water Source Point"):
-    # Load the pickled model
-    with open("model.pkl", "rb") as f:
-        model = pickle.load(f)
 
     # Create a dictionary mapping for each categorical variable
     district_map = {district: i for i, district in enumerate(df["DISTRICT"].unique())}
