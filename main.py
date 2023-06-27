@@ -9,7 +9,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.model_selection import train_test_split
 
-data = pd.read_csv('manicaland_dataset.csv')
+df = pd.read_csv('manicaland_dataset.csv')
 le = LabelEncoder()
 
 data['DISTRICT'] = le.fit_transform(data['DISTRICT'])
