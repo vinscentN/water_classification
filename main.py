@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import xgboost as xgb
 import numpy as np
 st.header("Water Source Point Functionality Prediction App")
 df = pd.read_csv("manicaland_dataset.csv")
