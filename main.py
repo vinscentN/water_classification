@@ -12,17 +12,17 @@ from sklearn.model_selection import train_test_split
 df = pd.read_csv('manicaland_dataset.csv')
 le = LabelEncoder()
 
-data['DISTRICT'] = le.fit_transform(data['DISTRICT'])
-data['VILLAGE'] = le.fit_transform(data['VILLAGE'].astype(str))
-data['FUNCTIONAL_STATE'] = le.fit_transform(data['FUNCTIONAL_STATE'].astype(str))
-data['SOAK_AWAY_PIT'] = le.fit_transform(data['SOAK_AWAY_PIT'].astype(str))
-data['PUMP_TYPE'] = le.fit_transform(data['PUMP_TYPE'].astype(str))
-data['PROTECTED'] = le.fit_transform(data['PROTECTED'].astype(str))
-data['BH_COMMITTEE'] = le.fit_transform(data['BH_COMMITTEE'].astype(str))
-data['SEASONALITY'] = le.fit_transform(data['SEASONALITY'].astype(str))
-data['PALATABILITY'] = le.fit_transform(data['PALATABILITY'].astype(str))
+df['DISTRICT'] = le.fit_transform(df['DISTRICT'])
+df['VILLAGE'] = le.fit_transform(df['VILLAGE'].astype(str))
+df['FUNCTIONAL_STATE'] = le.fit_transform(df['FUNCTIONAL_STATE'].astype(str))
+df['SOAK_AWAY_PIT'] = le.fit_transform(df['SOAK_AWAY_PIT'].astype(str))
+df['PUMP_TYPE'] = le.fit_transform(df['PUMP_TYPE'].astype(str))
+df['PROTECTED'] = le.fit_transform(df['PROTECTED'].astype(str))
+df['BH_COMMITTEE'] = le.fit_transform(df['BH_COMMITTEE'].astype(str))
+df['SEASONALITY'] = le.fit_transform(df['SEASONALITY'].astype(str))
+df['PALATABILITY'] = le.fit_transform(df['PALATABILITY'].astype(str))
 
-data_new = data.drop("DATE OF LAST VISIT", axis=1)
+data_new = df.drop("DATE OF LAST VISIT", axis=1)
 features = ['DISTRICT','WARD','VILLAGE','HH_SERVED','PUMP_TYPE','OUTLETS','SOAK_AWAY_PIT','VPM_VISITS/YEAR',
             'BH_COMMITTEE','SEASONALITY','AQUIFER_YIELD','TOTAL _DISSOLVED -SOLIDS','FUNCTIONAL_STATE']
 model_data = data_new[features]
