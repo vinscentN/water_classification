@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from PIL import Image
 from sklearn.preprocessing import LabelEncoder
 import xgboost as xgb
 from sklearn.feature_selection import SelectKBest
@@ -26,7 +27,9 @@ st.header("Water Source Point Functionality Prediction App")
 
 
 
-
+# Add an image to the top sidebar
+image = Image.open('borehole.jpg')
+st.sidebar.image(image, width=200)
 st.title("Water Pump Prediction")
 st.sidebar.title("Input Parameters")
 district = st.sidebar.selectbox("District", df["DISTRICT"].unique())
