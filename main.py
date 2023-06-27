@@ -10,50 +10,11 @@ from sklearn.model_selection import train_test_split
 import pickle
 
 df = pd.read_csv('manicaland_dataset.csv')
-le = LabelEncoder()
 
-df['DISTRICT'] = le.fit_transform(df['DISTRICT'])
-df['VILLAGE'] = le.fit_transform(df['VILLAGE'].astype(str))
-df['FUNCTIONAL_STATE'] = le.fit_transform(df['FUNCTIONAL_STATE'].astype(str))
-df['SOAK_AWAY_PIT'] = le.fit_transform(df['SOAK_AWAY_PIT'].astype(str))
-df['PUMP_TYPE'] = le.fit_transform(df['PUMP_TYPE'].astype(str))
-df['PROTECTED'] = le.fit_transform(df['PROTECTED'].astype(str))
-df['BH_COMMITTEE'] = le.fit_transform(df['BH_COMMITTEE'].astype(str))
-df['SEASONALITY'] = le.fit_transform(df['SEASONALITY'].astype(str))
-df['PALATABILITY'] = le.fit_transform(df['PALATABILITY'].astype(str))
+with open('xgb_model.pkl', 'rb') as file:
+    XGB = pickle.load(file)
 
-data_new = df.drop("DATE OF LAST VISIT", axis=1)
-features = ['DISTRICT','WARD','VILLAGE','HH_SERVED','PUMP_TYPE','OUTLETS','SOAK_AWAY_PIT','VPM_VISITS/YEAR',
-            'BH_COMMITTEE','SEASONALITY','AQUIFER_YIELD','TOTAL _DISSOLVED -SOLIDS','FUNCTIONAL_STATE']
-model_data = data_new[features]
-
-y = model_data['FUNCTIONAL_STATE']
-X = model_data.copy()
-del X['FUNCTIONAL_STATE']
-
-Predictors = model_data.drop('FUNCTIONAL_STATE',axis=1).columns
-feature_name = list(X.columns)
-num_feats= 10
-X_norm = MinMaxScaler().fit_transform(X)
-chi_selector = SelectKBest(chi2, k=num_feats)
-chi_selector.fit(X_norm, y)
-chi_support = chi_selector.get_support()
-chi_feature = X.loc[:,chi_support].columns.tolist()
-
-PredictorScaler=MinMaxScaler()
-
-PredictorScalerFit=PredictorScaler.fit(X)
-
-X=PredictorScalerFit.transform(X)
-
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-
-
-clf=XGBClassifier(max_depth=10, learning_rate=0.01, n_estimators=200, objective='binary:logistic', booster='gbtree', eval_metric='merror',use_label_encoder=False)
-
-XGB=clf.fit(X_train,y_train)
-
+# Make predictions using the loaded model
 
 ##FRONTEND UI
 st.header("Water Source Point Functionality Prediction App")
@@ -114,7 +75,7 @@ if st.sidebar.button("Predict"):
 
     # Make the prediction
 
-    predictions=XGB.predict(X_test)(input_data)[0]
+    predictions=XGB.predict(input_data)[0]
     # Display the prediction
     st.write("### Prediction")
 
