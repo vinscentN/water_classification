@@ -1,12 +1,14 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-st.header("Water Source Point Functionality Prediction App")
-df = pd.read_csv("manicaland_dataset.csv")
-# load model
-best_xgboost_model = xgb.XGBRegressor()
-best_xgboost_model.load_model("best_model.json")
+import pickle
 
+st.header("Water Source Point Functionality Prediction App")
+
+df = pd.read_csv("manicaland_dataset.csv")
+
+# Load the trained XGBoost model from a pickled file
+with open("XGB_pickle.pkl", "rb") as f:
+    best_xgboost_model = pickle.load(f)
 
 st.subheader("Please input or select relevant features about a Water Source Point!")
 
