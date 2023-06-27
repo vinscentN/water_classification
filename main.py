@@ -26,15 +26,13 @@ data_new = df.drop("DATE OF LAST VISIT", axis=1)
 features = ['DISTRICT','WARD','VILLAGE','HH_SERVED','PUMP_TYPE','OUTLETS','SOAK_AWAY_PIT','VPM_VISITS/YEAR',
             'BH_COMMITTEE','SEASONALITY','AQUIFER_YIELD','TOTAL _DISSOLVED -SOLIDS','FUNCTIONAL_STATE']
 model_data = data_new[features]
-
+#
 y = model_data['FUNCTIONAL_STATE']
 X = model_data.copy()
 del X['FUNCTIONAL_STATE']
 Predictors = model_data.drop('FUNCTIONAL_STATE',axis=1).columns
 feature_name = list(X.columns)
 num_feats= 10
-
-
 X_norm = MinMaxScaler().fit_transform(X)
 chi_selector = SelectKBest(chi2, k=num_feats)
 chi_selector.fit(X_norm, y)
