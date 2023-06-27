@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
-from xgboost import XGBClassifier
+import xgboost as xgb
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 from sklearn.preprocessing import MinMaxScaler
@@ -10,10 +10,9 @@ from sklearn.model_selection import train_test_split
 import pickle
 
 
-#Loading up the Regression model we created
-model = XGBClassifier.XGBRegressor()
-model.load_model('xgb_model.json')
-
+# load model
+model = xgb.XGBRegressor()
+model.load_model("xgb_model.json")
 #Caching the model for faster loading
 
 df = pd.read_csv('manicaland_dataset.csv')
