@@ -9,10 +9,16 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 import pickle
 
+
+#Loading up the Regression model we created
+model = XGBClassifier.XGBRegressor()
+model.load_model('xgb_model.json')
+
+#Caching the model for faster loading
+
 df = pd.read_csv('manicaland_dataset.csv')
 
-with open('xgb_model.pkl', 'rb') as file:
-    XGB = pickle.load(file)
+
 
 # Make predictions using the loaded model
 
@@ -75,7 +81,7 @@ if st.sidebar.button("Predict"):
 
     # Make the prediction
 
-    predictions=XGB.predict(input_data)[0]
+    predictions=model.predict(input_data)[0]
     # Display the prediction
     st.write("### Prediction")
 
