@@ -1,15 +1,15 @@
-
 import streamlit as st
 import pandas as pd
-import pickle
-
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import  LabelEncoder
+import xgboost as xgb
+import numpy as np
 st.header("Water Source Point Functionality Prediction App")
-
 df = pd.read_csv("manicaland_dataset.csv")
+# load model
+best_xgboost_model = xgb.XGBRegressor()
+best_xgboost_model.load_model("best_model.json")
 
-# Load the trained XGBoost model from a pickled file
-with open("XGB_pickle.pkl", "rb") as f:
-    best_xgboost_model = pickle.load(f)
 
 st.subheader("Please input or select relevant features about a Water Source Point!")
 
