@@ -12,7 +12,7 @@ import pickle
 
 
 # load model
-model = xgb.XGBRegressor()
+model = xgb.XGBClassifier()
 model.load_model("xgb_best_model.json")
 #Caching the model for faster loading
 
