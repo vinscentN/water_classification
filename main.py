@@ -80,13 +80,19 @@ if st.button("Click Here to Determine the Functionality of the Borehole"):
     input_data["bh_committee"] = input_data["bh_committee"].apply(lambda x:  bh_committee_map[x])
     # Make the prediction
 
-    predictions=model.predict(input_data)[0]
+    prediction=model.predict(input_data)[0]
     # Display the prediction
     st.write("### Prediction")
 
     # Convert the predictions to the corresponding functionality state labels
-    labels = {0: "Fully Functional", 1: "Non-Functional",2:"Partially Functional"}
-    functionality_state = predictions
+    if prediction == 0:
+       functionality_state = "Fully Functional"
+    elif prediction == 1:
+       functionality_state = "Non-Functional"
+    elif prediction == 2:
+       functionality_state = "Partially Functional"
+    else:
+       functionality_state = "Unknown"
     # Output the functionality state
     st.write(f"The water pump is {functionality_state}")
 
