@@ -12,9 +12,8 @@ import pickle
 
 
 # load model
-model = xgb.XGBClassifier()
-model.load_model("xgb_best_model.json")
-#Caching the model for faster loading
+with open("XGB_best_pickle.pkl", "rb") as f:
+    model = pickle.load(f)
 
 df = pd.read_csv('manicaland_dataset.csv')
 
