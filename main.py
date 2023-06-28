@@ -13,7 +13,7 @@ import pickle
 
 # load model
 model = xgb.XGBRegressor()
-model.load_model("best_model.json")
+model.load_model("xgb_best_model.json")
 #Caching the model for faster loading
 
 df = pd.read_csv('manicaland_dataset.csv')
@@ -23,13 +23,13 @@ df = pd.read_csv('manicaland_dataset.csv')
 # Make predictions using the loaded model
 
 ##FRONTEND UI
-st.header("Manicaland Province Water Source Points")
+st.header("Manicaland Province Boreholes")
 
 
 
 # Add an image to the top sidebar
 
-st.title("Water Pump Prediction")
+st.title("Water Pump Functionality")
 image = Image.open('borehole.jpg')
 st.image(image, width=450)
 st.sidebar.title("Water Source Parameters")
@@ -47,7 +47,7 @@ aquifer_yield = st.sidebar.number_input("Aquifer Yield", min_value=0, value=100)
 total_dissolved_solids = st.sidebar.slider("Total Dissolved Solids", 0, 1000, 500)
 
 # Create a button to predict the water pump status
-if st.button("Click Here to Determine the status of the Water Source Point"):
+if st.button("Click Here to Determine the Functionality of the Borehole"):
 
     # Create a dictionary mapping for each categorical variable
     district_map = {district: i for i, district in enumerate(df["DISTRICT"].unique())}
