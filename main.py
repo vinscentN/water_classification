@@ -86,7 +86,7 @@ if st.button("Click Here to Determine the Functionality of the Borehole"):
 
     # Convert the predictions to the corresponding functionality state labels
     labels = {0: "Fully Functional", 1: "Non-Functional",2:"Partially Functional"}
-    functionality_state = [labels[prediction] for prediction in predictions]
+    functionality_state = predictions
     # Output the functionality state
     st.write(f"The water pump is {functionality_state}")
 
