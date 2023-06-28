@@ -40,7 +40,7 @@ pump_type = st.sidebar.selectbox("Pump Type", df["PUMP_TYPE"].unique())
 outlets = st.sidebar.slider("Number of Outlets", 0, 10, 2)
 soak_away_pit = 1 if st.sidebar.checkbox("Soak Away Pit") else 0
 vpm_visits = st.sidebar.slider("VPM Visits per Year", 0, 12, 3)
-bh_committee = 1 if st.sidebar.checkbox("BH Committee") else 0
+bh_committee =  st.sidebar.selectbox("Borehole Committee", df["BH_COMMITTEE"].unique())
 seasonality = st.sidebar.selectbox("Seasonality", df["SEASONALITY"].unique())
 aquifer_yield = st.sidebar.number_input("Aquifer Yield", min_value=0, value=100)
 total_dissolved_solids = st.sidebar.slider("Total Dissolved Solids", 0, 1000, 500)
@@ -54,7 +54,7 @@ if st.button("Click Here to Determine the Functionality of the Borehole"):
     village_map = {village: i for i, village in enumerate(df["VILLAGE"].unique())}
     pump_type_map = {pump_type: i for i, pump_type in enumerate(df["PUMP_TYPE"].unique())}
     seasonality_map = {seasonality: i for i, seasonality in enumerate(df["SEASONALITY"].unique())}
-
+    bh_committee_map = {bh_committee: i for i, bh_committee in enumerate(df["BH_COMMITTEE"].unique())}
     # Create a DataFrame with the input values
     input_data = pd.DataFrame({
         "district": [district],
@@ -77,7 +77,7 @@ if st.button("Click Here to Determine the Functionality of the Borehole"):
     input_data["village"] = input_data["village"].apply(lambda x: village_map[x])
     input_data["pump_type"] = input_data["pump_type"].apply(lambda x: pump_type_map[x])
     input_data["seasonality"] = input_data["seasonality"].apply(lambda x: seasonality_map[x])
-
+    input_data["bh_committee"] = input_data["bh_committee"].apply(lambda x:  bh_committee_map[x])
     # Make the prediction
 
     predictions=model.predict(input_data)[0]
